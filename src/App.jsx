@@ -20,11 +20,12 @@ export default function App() {
   const [cityFilter, setCityFilter] = useState("All");
   const [open, setOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [infoOpen, setInfoOpen] = useState(false);
 
   async function get() {
     try {
       const response = await axios.get(API);
-      setTodos(response.data);
+      setTodeleteos(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -131,6 +132,7 @@ export default function App() {
             <option>Bokhtar</option>
             <option>Hisar</option>
             <option>Kulob</option>
+            <option>Pamir</option>
           </select>
           <input
             type="text"
@@ -174,14 +176,14 @@ export default function App() {
               <td>{element.phone}</td>
               <td>
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="error"
                   onClick={() => handleDelete(element.id)}
                 >
                   Delete
                 </Button>{" "}
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   color="success"
                   onClick={() => handleComplete(element.id)}
                 >
@@ -189,6 +191,9 @@ export default function App() {
                 </Button>{" "}
                 <Button variant="contained" onClick={() => handleEdit(element)}>
                   Edit
+                </Button>
+                <Button variant="contained" onClick={() => setInfoOpen(true)}>
+                  Info
                 </Button>
               </td>
             </tr>
@@ -277,6 +282,28 @@ export default function App() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog onClose={() => setInfoOpen(false)} open={infoOpen}>
+  <DialogTitle>GetByInfo ассинхронно</DialogTitle>
+  <DialogContent dividers>
+    {currentUser ? (
+  <>
+    <img src={currentUser.photo} alt="" />
+    <ul>
+      <li><strong>Name:</strong> {currentUser.name}</li>
+      <li><strong>Email:</strong> {currentUser.email}</li>
+      <li><strong>Phone:</strong> {currentUser.phone}</li>
+      <li><strong>City:</strong> {currentUser.country}</li>
+      <li><strong>Status:</strong> {currentUser.completed ? "Active" : "Inactive"}</li>
+    </ul>
+  </>
+) : null}
+
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setInfoOpen(false)}>Close</Button>
+  </DialogActions>
+</Dialog>
+
     </div>
   );
 }
