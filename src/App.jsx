@@ -35,6 +35,11 @@ export default function App() {
     get();
   }, []);
 
+  function getByInfo(user) {
+    setCurrentUser(user);
+    setInfoOpen(true);
+  }
+
   async function handleDelete(id) {
     try {
       await axios.delete(`${API}/${id}`);
@@ -192,7 +197,7 @@ export default function App() {
                 <Button variant="contained" onClick={() => handleEdit(element)}>
                   Edit
                 </Button>
-                <Button variant="contained" onClick={() => setInfoOpen(true)}>
+                <Button variant="contained" onClick={() => getByInfo(element)}>
                   Info
                 </Button>
               </td>
@@ -283,27 +288,36 @@ export default function App() {
         </DialogActions>
       </Dialog>
       <Dialog onClose={() => setInfoOpen(false)} open={infoOpen}>
-  <DialogTitle>GetByInfo ассинхронно</DialogTitle>
-  <DialogContent dividers>
-    {currentUser ? (
-  <>
-    <img src={currentUser.photo} alt="" />
-    <ul>
-      <li><strong>Name:</strong> {currentUser.name}</li>
-      <li><strong>Email:</strong> {currentUser.email}</li>
-      <li><strong>Phone:</strong> {currentUser.phone}</li>
-      <li><strong>City:</strong> {currentUser.country}</li>
-      <li><strong>Status:</strong> {currentUser.completed ? "Active" : "Inactive"}</li>
-    </ul>
-  </>
-) : null}
-
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={() => setInfoOpen(false)}>Close</Button>
-  </DialogActions>
-</Dialog>
-
+        <DialogTitle>GetByInfo ассинхронно</DialogTitle>
+        <DialogContent dividers>
+          {currentUser ? (
+            <>
+              <img src={currentUser.photo} alt=""  style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "8px", marginBottom: "1rem" }} />
+              <ul>
+                <li>
+                  <strong>Name:</strong> {currentUser.name}
+                </li>
+                <li>
+                  <strong>Email:</strong> {currentUser.email}
+                </li>
+                <li>
+                  <strong>Phone:</strong> {currentUser.phone}
+                </li>
+                <li>
+                  <strong>City:</strong> {currentUser.country}
+                </li>
+                <li>
+                  <strong>Status:</strong>{" "}
+                  {currentUser.completed ? "Active" : "Inactive"}
+                </li>
+              </ul>
+            </>
+          ) : null}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setInfoOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
