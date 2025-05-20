@@ -25,7 +25,7 @@ export default function App() {
   async function get() {
     try {
       const response = await axios.get(API);
-      setTodeleteos(response.data);
+      setTodos(response.data);
     } catch (error) {
       console.error(error);
     }
